@@ -537,7 +537,8 @@ def crear_documento_foliado():
     #********************SECCION CENTRAL*********************************
     #Variables para darle color alos radioButton
     letra_activa = "white"
-    color_seleccionado ="white" 
+    color_seleccionado ="white"
+    color_fondo_activo = "#9DBCCC" 
     #
     seccion_central= ttk.LabelFrame(ventana_config, text="       ", style="Custom.TLabelframe")
     seccion_central.pack(padx=0, pady=0, ipadx=0, ipady=0)
@@ -556,7 +557,8 @@ def crear_documento_foliado():
     opcion_e = tk.Radiobutton(canvas_central, text="Encabezado", 
                                variable=pie_encabezado, value="Encabezado", 
                                fg='black',  # Color de texto normal
-                                bg='#9DBCCC',  # Color de fondo normal
+                                bg='#9DBCCC',  # Color de fondo normal,
+                                activebackground= color_fondo_activo,
                                 activeforeground = letra_activa,  # Color de texto cuando está activo
                                 selectcolor= color_seleccionado,  # Color de fondo cuando está seleccionado
                                 font=("Times", 12),
@@ -570,8 +572,9 @@ def crear_documento_foliado():
                                variable=pie_encabezado, value="Pie de página", 
                                 fg='black',  # Color de texto normal
                                 bg='#9DBCCC',  # Color de fondo normal
-                                activeforeground='white',  # Color de texto cuando está activo
-                                selectcolor="white",  # Color de fondo cuando está seleccionado
+                                activebackground= color_fondo_activo,
+                                activeforeground = letra_activa,  # Color de texto cuando está activo
+                                selectcolor= color_seleccionado,  # Color de fondo cuando está seleccionado
                                 font=("Times", 12),
                                command=lambda:[opcion_h.config(state=tk.NORMAL),
                                                opcion_v.config(state=tk.NORMAL),
@@ -588,8 +591,9 @@ def crear_documento_foliado():
     opcion_h = tk.Radiobutton(ventana_config, text="Vertical", variable=opcion_ori, value="Vertical",
                           fg='black',  # Color de texto normal
                           bg='#9DBCCC',  # Color de fondo normal
-                          activeforeground='white',  # Color de texto cuando está activo
-                          selectcolor="white",  # Color de fondo cuando está seleccionado
+                          activebackground= color_fondo_activo,
+                                activeforeground = letra_activa,  # Color de texto cuando está activo
+                                selectcolor= color_seleccionado,  # Color de fondo cuando está seleccionado
                           font=("Times", 12))
     opcion_h.pack(side=tk.LEFT, padx=(0, 20))
     opcion_h.place(x=100, y=270)
@@ -598,8 +602,9 @@ def crear_documento_foliado():
     opcion_v = tk.Radiobutton(ventana_config, text="Horizontal", variable=opcion_ori, value="Horizontal",
                              fg='black',  # Color de texto normal
                           bg='#9DBCCC',  # Color de fondo normal
-                          activeforeground='white',  # Color de texto cuando está activo
-                          selectcolor="white",  # Color de fondo cuando está seleccionado
+                         activebackground= color_fondo_activo,
+                                activeforeground = letra_activa,  # Color de texto cuando está activo
+                                selectcolor= color_seleccionado,  # Color de fondo cuando está seleccionado
                           font=("Times", 12))
     opcion_v.pack(side=tk.LEFT)
     opcion_v.place(x=350, y=270)
@@ -615,8 +620,9 @@ def crear_documento_foliado():
     opcion_i = tk.Radiobutton(ventana_config, text="Impar", variable=opcion_var, value="Impar",
                    fg='black',  # Color de texto normal
                           bg='#9DBCCC',  # Color de fondo normal
-                          activeforeground='white',  # Color de texto cuando está activo
-                          selectcolor="white",  # Color de fondo cuando está seleccionado
+                          activebackground= color_fondo_activo,
+                                activeforeground = letra_activa,  # Color de texto cuando está activo
+                                selectcolor= color_seleccionado,  # Color de fondo cuando está seleccionado
                           font=("Times", 12))
     opcion_i.pack(side=tk.LEFT, padx=(0, 20))
     opcion_i.place(x=100,y=340)
@@ -624,8 +630,9 @@ def crear_documento_foliado():
                    variable=opcion_var, value="Normal",
                    fg='black',  # Color de texto normal
                           bg='#9DBCCC',  # Color de fondo normal
-                          activeforeground='white',  # Color de texto cuando está activo
-                          selectcolor="white",  # Color de fondo cuando está seleccionado
+                          activebackground= color_fondo_activo,
+                                activeforeground = letra_activa,  # Color de texto cuando está activo
+                                selectcolor= color_seleccionado, # Color de fondo cuando está seleccionado
                           font=("Times", 12))
     opcion_n.pack(side=tk.LEFT)
     opcion_n.place(x=350,y=340)
@@ -657,8 +664,9 @@ def crear_documento_foliado():
                    variable=opcion_asc_desc, value="Ascendente",
                    fg='black',  # Color de texto normal
                           bg='#9DBCCC',  # Color de fondo normal
-                          activeforeground='white',  # Color de texto cuando está activo
-                          selectcolor="white",  # Color de fondo cuando está seleccionado
+                          activebackground= color_fondo_activo,
+                                activeforeground = letra_activa,  # Color de texto cuando está activo
+                                selectcolor= color_seleccionado,  # Color de fondo cuando está seleccionado
                           font=("Times", 12))
     opcion_a.pack(side=tk.LEFT, padx=(0, 20))
     opcion_a.place(x=100,y=420)
@@ -666,8 +674,9 @@ def crear_documento_foliado():
                    variable=opcion_asc_desc, value="Descendente",
                    fg='black',  # Color de texto normal
                           bg='#9DBCCC',  # Color de fondo normal
-                          activeforeground='white',  # Color de texto cuando está activo
-                          selectcolor="white",  # Color de fondo cuando está seleccionado
+                         activebackground= color_fondo_activo,
+                                activeforeground = letra_activa,  # Color de texto cuando está activo
+                                selectcolor= color_seleccionado,  # Color de fondo cuando está seleccionado
                           font=("Times", 12)
                    )  
     opcion_d.pack(side=tk.LEFT, padx=10, pady=10)  # Añade padding
