@@ -311,49 +311,47 @@ def crear_documento_foliado():
                 return 'Horizontal'
             else:
                 return 'Vertical' 
-    #Funcion para superponer los archivos
-    def superponerPdf():
-        estado.set("En proceso....    ") 
-        ventana_config.update_idletasks()               
+    #Funcion para superponer los archivos           
+    def superponer_pdfs_horizontal():
+    # Abrir los archivos PDF pdf1_path, pdf2_path
         archivo_abajo_datos = ruta_pdf.get()
-        if not archivo_abajo_datos:
-            messagebox.showerror("Error", "Seleccione un archivo PDF válido para superponer.")
-            return
-        try:
-            pdfAbajoReader = PyPDF2.PdfReader(archivo_abajo_datos)
+        if obtener_orientacion(ruta_pdf.get()) == "Horizontal" and opcion_ori.get() == "Vertical":
+            archivo_arriba = "numeracion_impar_vertical.pdf"
+            if opcion_var.get() == "Normal":
+                archivo_arriba = "numeracion_normal_vertical.pdf"    
+        else:
             archivo_arriba = aux_ruta_guardar.get() 
-            if not archivo_arriba:
-                return  # Se canceló la selección del segundo archivo
-            with open(archivo_arriba, 'rb') as archivo_arriba:
-                pdfArribaReader = PyPDF2.PdfReader(archivo_arriba)
+            
+        with open(archivo_abajo_datos, 'rb') as file1, open(archivo_arriba, 'rb') as file2:
+            reader1 = PyPDF2.PdfReader(file1)
+            reader2 = PyPDF2.PdfReader(file2)
+            writer = PyPDF2.PdfWriter()
 
-                for pageNum in range(0, len(pdfArribaReader.pages)):
-                    pdfAbajoReader.pages[pageNum].merge_page(pdfArribaReader.pages[pageNum])
+            # Iterar sobre las páginas del primer PDF
+            for page_num in range(len(reader1.pages)):
+                page1 = reader1.pages[page_num]
 
-                pdfWriter = PyPDF2.PdfWriter()
+                # Si hay una página correspondiente en el segundo PDF, superponerla
+                if page_num < len(reader2.pages):
+                    page2 = reader2.pages[page_num]
+                    page1.merge_page(page2)  # Superponer la página
 
-                for pageNum in range(0, len(pdfAbajoReader.pages)):
-                    pageObj = pdfAbajoReader.pages[pageNum]
-                    pdfWriter.add_page(pageObj)               
-                result_pdf_file = ruta_pdf.get()
-                result_pdf_file = result_pdf_file.upper()
-                result_pdf_file = result_pdf_file.replace(".PDF", "-FOLIADO.pdf")
-                if not result_pdf_file:
-                    return  # Se canceló la selección de la ruta de guardado
-                with open(result_pdf_file, 'wb') as output_pdf:
-                    pdfWriter.write(output_pdf)
-            messagebox.showinfo("Éxito", f"Se guardo correctamente en la ruta: '{result_pdf_file}'")
-            estado.set(f"Archivo listo, se guardó con el nombre: {os.path.basename(result_pdf_file)}")
-        except Exception as e:
-            messagebox.showerror("Error", f"No se pudo superponer los PDF: {e}")
-    
+                # Agregar la página resultante al escritor
+                writer.add_page(page1)
+                
+                resultado = ruta_pdf.get()
+                resultado = resultado.upper()
+                resultado = resultado.replace(".PDF", "-FOLIADO.pdf")
+            # Guardar el archivo PDF resultante
+            with open(resultado, 'wb') as output_file:
+                writer.write(output_file)
+                
     def crear_doc():
         from docx.enum.section import WD_ORIENT
         from docx2pdf import convert
         from docx.shared import Cm
         from docx.shared import Inches
         from docx.shared import Mm
-        #
         # llamar a rutas, la principal y donde se guardará lo creado
         archivo_pdf = ruta_pdf.get()
         archivo_guardar = ruta_guardar.get()
@@ -386,10 +384,7 @@ def crear_documento_foliado():
             if orientacion == "Horizontal":
                 section.right_margin = Inches(0.1)
                 section.orientation = WD_ORIENT.LANDSCAPE
-                section.page_width, section.page_height = section.page_height, section.page_width
-                #iria aqui el codigo para imprimir
-                #PONER EL SUPERPONER
-                
+                section.page_width, section.page_height = section.page_height, section.page_width                
             else:
                 section.orientation = WD_ORIENT.PORTRAIT      
         try:#condicionales para poder foliar en distintos asos            
@@ -421,11 +416,11 @@ def crear_documento_foliado():
             #borrar el temporal 
             os.remove(archivo_docx_temp)
             #llamada a la funcion superponer para poder fusionar los PDF
-            superponerPdf()
+            superponer_pdfs_horizontal()
             ventana_config.update_idletasks()
             #enviando la ruta del archivo para poder abrir el directorio
             abrir_directorio(archivo_guardar)
-            #os.remove(archivo_guardar)
+            os.remove(archivo_guardar)
         except ValueError as e:
             messagebox.showerror("Error", str(e))
 #**********************************************  
@@ -448,7 +443,6 @@ def crear_documento_foliado():
         canvas.create_image(0, 0, anchor=tk.NW, image=imagen)
         canvas.image = imagen#largoxalto
         ventana_imagen.geometry(f"{alto}x{ancho}")
-    
     #**********************************************  
     #minimizar la ventana principal
     def minimizar_ventana_principal():
@@ -465,7 +459,7 @@ def crear_documento_foliado():
     ventana_config.maxsize(ventana_width,ventana_height)
     ventana_config.configure(bg=color_secundario)
     ventana_config.protocol("WM_DELETE_WINDOW", minimizar_ventana_principal)
-
+#******************SEUGNDA INTERFAZ******************************
     #Cargar la imagen de fondo
     imagen_fondo2 = Image.open(abrir_imagen("fondo2.jpg"))
     imagen_fondo2 = imagen_fondo2.resize((ventana_width, ventana_height))  # Ajustar tamaño si es necesario
@@ -494,8 +488,7 @@ def crear_documento_foliado():
     tit_crear.pack(pady=(0, 20))
     tit_crear.place(x=60,y=8)
     #Titulo 
-    
-    
+
     # Crear un estilo personalizado para el LabelFrame
     style = ttk.Style()
     style.configure("Custom.TLabelframe", 
@@ -514,17 +507,18 @@ def crear_documento_foliado():
     #**********************SECCION SUPERIOR********************************  
     seccion_superior= ttk.LabelFrame(ventana_config, text="       ", style="Custom.TLabelframe")
     seccion_superior.pack(padx=0, pady=0, ipadx=0, ipady=0)
-    seccion_superior.place(x=60, y=80)
+    seccion_superior.place(x=60, y=60)
+
 
     canvas_central = tk.Canvas(seccion_superior, width=725, height=80, highlightthickness=0,background="#9DBCCC")
     canvas_central.pack(fill="both", expand=True)
     canvas_central.create_image(0, 0, anchor=tk.NW, image=fondo3)
     #para leer la seleccion 
-    ttk.Label(ventana_config, text="Selección de archivo PDF", font=('Hero', 14, 'bold'),background="#9DBCCC").pack(anchor=tk.W,padx=(80),pady=(100))
+    ttk.Label(ventana_config, text="Selección de archivo PDF", font=('Hero', 12, 'bold'),background="#9DBCCC").pack(anchor=tk.W,padx=(80),pady=(87))
     ruta_pdf = tk.StringVar()
     txt_examinar = tk.Entry(ventana_config, textvariable=ruta_pdf, state='readonly',width=70,font=('Hero',10))#
     txt_examinar.pack(side=tk.LEFT, padx=(0, 10))
-    txt_examinar.place(x=80,y=130)
+    txt_examinar.place(x=80,y=110)
     #cargar imagen para el boton
     imagen_exa = Image.open(abrir_imagen("btnExaminar.png"))
     imagen_ex = imagen_exa.resize((225, 88))  # Ajusta el tamaño según lo necesario
@@ -539,52 +533,109 @@ def crear_documento_foliado():
             command=seleccionar_pdf,
             image=imagen_e
             )
-    btn_examinar.place(x=590, y=113)
+    btn_examinar.place(x=590, y=88)
     #********************SECCION CENTRAL*********************************
-    # Crear un estilo personalizado para los radioButton
-    style = ttk.Style()
-    style.configure("Custom.TRadiobutton", background="#9DBCCC", foreground="black", font=("Times", 12)
-                    )
-    style.map("Custom.TRadiobutton",
-          background=[('selected', "#9DBCCC"), ('active', color_secundario)],
-          foreground=[('selected', 'black'), ('active', 'white')])
-    
+    #Variables para darle color alos radioButton
+    letra_activa = "white"
+    color_seleccionado ="white"
+    color_fondo_activo = "#9DBCCC" 
+    #
     seccion_central= ttk.LabelFrame(ventana_config, text="       ", style="Custom.TLabelframe")
     seccion_central.pack(padx=0, pady=0, ipadx=0, ipady=0)
-    seccion_central.place(x=60, y=180)
+    seccion_central.place(x=60, y=160)
 
-    canvas_central = tk.Canvas(seccion_central, width=420, height=260, highlightthickness=0)
+    canvas_central = tk.Canvas(seccion_central, width=420, height=294, highlightthickness=0)
     canvas_central.pack(fill="both", expand=True)
     canvas_central.create_image(0, 0, anchor=tk.NW, image=fondo3)
     
 
     # checkbutton's para TIPO DE BORDE
-    seleccion = ttk.Label(canvas_central, text="Selección de tipo de borde ", font=('Hero', 14, 'bold'),background="#9DBCCC")
-    canvas_central.create_window(140, 10, window=seleccion)
+    seleccion = ttk.Label(canvas_central, text="Selección de tipo de borde ", font=('Hero', 12, 'bold'),background="#9DBCCC")
+    canvas_central.create_window(120, 10, window=seleccion)
     
     pie_encabezado = tk.StringVar(value="Encabezado")
-    opcion_e = ttk.Radiobutton(canvas_central, text="Encabezado", 
+    opcion_e = tk.Radiobutton(canvas_central, text="Encabezado", 
                                variable=pie_encabezado, value="Encabezado", 
-                               style="Custom.TRadiobutton")
-    canvas_central.create_window(90, 50, window=opcion_e)
+                               fg='black',  # Color de texto normal
+                                bg='#9DBCCC',  # Color de fondo normal,
+                                activebackground= color_fondo_activo,
+                                activeforeground = letra_activa,  # Color de texto cuando está activo
+                                selectcolor= color_seleccionado,  # Color de fondo cuando está seleccionado
+                                font=("Times", 12),
+                               command=lambda:[opcion_h.config(state=tk.DISABLED),
+                                               opcion_v.config(state=tk.DISABLED),
+                                               opcion_d.config(state=tk.NORMAL),
+                                               opcion_ori.set(0)])
+    canvas_central.create_window(86, 40, window=opcion_e)
     
-    opcion_p = ttk.Radiobutton(canvas_central, text="Pie de página", 
+    opcion_p = tk.Radiobutton(canvas_central, text="Pie de página",
                                variable=pie_encabezado, value="Pie de página", 
-                               style="Custom.TRadiobutton")
-    canvas_central.create_window(333, 50, window=opcion_p)
+                                fg='black',  # Color de texto normal
+                                bg='#9DBCCC',  # Color de fondo normal
+                                activebackground= color_fondo_activo,
+                                activeforeground = letra_activa,  # Color de texto cuando está activo
+                                selectcolor= color_seleccionado,  # Color de fondo cuando está seleccionado
+                                font=("Times", 12),
+                               command=lambda:[opcion_h.config(state=tk.NORMAL),
+                                               opcion_v.config(state=tk.NORMAL),
+                                               opcion_d.config(state=tk.DISABLED)]# Color del texto cuando está habilitado
+                        )
+    canvas_central.create_window(338, 40, window=opcion_p)
     
-    # checkbutton's para TIPO DE FOLIACION
-    ttk.Label(ventana_config, text="Selección tipo de foliacion", font=('Helvetica', 14, 'bold'),background="#9DBCCC").pack(anchor=tk.W,padx=(80),pady=(50,0))
+    #********************** 
+    ##ORIENTACION DE FOLIACION    
+    titutlo_secundario = ttk.Label(ventana_config, text="Orientacion de la foliación", font=('Helvetica', 12, 'bold'),background="#9DBCCC")
+    opcion_ori = tk.StringVar(value="Vertical")
+    titutlo_secundario.place(x=80,y=240)
+    
+    opcion_h = tk.Radiobutton(ventana_config, text="Horizontal", variable=opcion_ori, value="Horizontal",
+                          fg='black',  # Color de texto normal
+                          bg='#9DBCCC',  # Color de fondo normal
+                          activebackground= color_fondo_activo,
+                                activeforeground = letra_activa,  # Color de texto cuando está activo
+                                selectcolor= color_seleccionado,  # Color de fondo cuando está seleccionado
+                          font=("Times", 12))
+    opcion_h.pack(side=tk.LEFT, padx=(0, 20))
+    opcion_h.place(x=100, y=270)
+
+    # Opción Horizontal
+    opcion_v = tk.Radiobutton(ventana_config, text="Vertical", variable=opcion_ori, value="Vertical",
+                             fg='black',  # Color de texto normal
+                          bg='#9DBCCC',  # Color de fondo normal
+                         activebackground= color_fondo_activo,
+                                activeforeground = letra_activa,  # Color de texto cuando está activo
+                                selectcolor= color_seleccionado,  # Color de fondo cuando está seleccionado
+                          font=("Times", 12))
+    opcion_v.pack(side=tk.LEFT)
+    opcion_v.place(x=350, y=270)
+    
+    opcion_h.config(state=tk.DISABLED)
+    opcion_v.config(state=tk.DISABLED)
+#
+    
+
+    # checkbutton's para TIPO DE FOLIACION**************************
+    ttk.Label(ventana_config, text="Selección tipo de foliacion", font=('Helvetica', 12, 'bold'),background="#9DBCCC").pack(anchor=tk.W,padx=(77),pady=(114,0))
     opcion_var = tk.StringVar(value="Impar")
-    opcion_i = ttk.Radiobutton(ventana_config, text="Impar", variable=opcion_var, value="Impar",
-                   style="Custom.TRadiobutton")
+    opcion_i = tk.Radiobutton(ventana_config, text="Impar", variable=opcion_var, value="Impar",
+                   fg='black',  # Color de texto normal
+                          bg='#9DBCCC',  # Color de fondo normal
+                          activebackground= color_fondo_activo,
+                                activeforeground = letra_activa,  # Color de texto cuando está activo
+                                selectcolor= color_seleccionado,  # Color de fondo cuando está seleccionado
+                          font=("Times", 12))
     opcion_i.pack(side=tk.LEFT, padx=(0, 20))
-    opcion_i.place(x=100,y=320)
-    opcion_n = ttk.Radiobutton(ventana_config, text="Normal", 
+    opcion_i.place(x=100,y=340)
+    opcion_n = tk.Radiobutton(ventana_config, text="Normal", 
                    variable=opcion_var, value="Normal",
-                   style="Custom.TRadiobutton")
+                   fg='black',  # Color de texto normal
+                          bg='#9DBCCC',  # Color de fondo normal
+                          activebackground= color_fondo_activo,
+                                activeforeground = letra_activa,  # Color de texto cuando está activo
+                                selectcolor= color_seleccionado, # Color de fondo cuando está seleccionado
+                          font=("Times", 12))
     opcion_n.pack(side=tk.LEFT)
-    opcion_n.place(x=350,y=320)
+    opcion_n.place(x=350,y=340)
     
     imagen_ay = Image.open(abrir_imagen("btnAyuda.png"))
     imagen_ayu = imagen_ay.resize((68, 28))  # Ajusta el tamaño según lo necesario
@@ -594,8 +645,8 @@ def crear_documento_foliado():
                             activebackground="#9DBCCC",bg="#9DBCCC",
                             border=0)
     boton_ayuda.pack(side=tk.RIGHT, padx=5)
-    boton_ayuda.place(x=350,y=275)
-    
+    boton_ayuda.place(x=300,y=305)
+    #*****************************
     #cargar logo de SUNAT
     imagen_logo = Image.open(abrir_imagen("Logo_Sunat.png"))
     img = imagen_logo.resize((170, 170))  # Ajusta el tamaño según lo necesario
@@ -603,18 +654,30 @@ def crear_documento_foliado():
     logo = tk.Label(ventana_config,image=img_logo,bg=color_secundario)
     logo.pack(pady=(0,30))
     logo.place(x=580,y=245)
+    #*****************************
+    
 #CAMBIAR EL BOTON CREAR
     #  checkbutton's para tipo de ORDEN
-    ttk.Label(ventana_config, text="Selección orden", font=('Helvetica', 14, 'bold'),background="#9DBCCC").pack(anchor=tk.W,padx=(80),pady=(70,0))
+    ttk.Label(ventana_config, text="Selección orden", font=('Helvetica', 12, 'bold'),background="#9DBCCC").pack(anchor=tk.W,padx=(77),pady=(40,0))
     opcion_asc_desc = tk.StringVar(value="Ascendente")
-    opcion_a = ttk.Radiobutton( ventana_config, text="Ascendente", 
+    opcion_a = tk.Radiobutton( ventana_config, text="Ascendente", 
                    variable=opcion_asc_desc, value="Ascendente",
-                   style="Custom.TRadiobutton")
+                   fg='black',  # Color de texto normal
+                          bg='#9DBCCC',  # Color de fondo normal
+                          activebackground= color_fondo_activo,
+                                activeforeground = letra_activa,  # Color de texto cuando está activo
+                                selectcolor= color_seleccionado,  # Color de fondo cuando está seleccionado
+                          font=("Times", 12))
     opcion_a.pack(side=tk.LEFT, padx=(0, 20))
     opcion_a.place(x=100,y=420)
-    opcion_d = ttk.Radiobutton(ventana_config, text="Descendente",
+    opcion_d = tk.Radiobutton(ventana_config, text="Descendente",
                    variable=opcion_asc_desc, value="Descendente",
-                   style="Custom.TRadiobutton",
+                   fg='black',  # Color de texto normal
+                          bg='#9DBCCC',  # Color de fondo normal
+                         activebackground= color_fondo_activo,
+                                activeforeground = letra_activa,  # Color de texto cuando está activo
+                                selectcolor= color_seleccionado,  # Color de fondo cuando está seleccionado
+                          font=("Times", 12)
                    )  
     opcion_d.pack(side=tk.LEFT, padx=10, pady=10)  # Añade padding
     opcion_d.place(x=350, y=420)
