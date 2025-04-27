@@ -611,9 +611,6 @@ def crear_documento_foliado():
     
     opcion_h.config(state=tk.DISABLED)
     opcion_v.config(state=tk.DISABLED)
-#
-    
-
     # checkbutton's para TIPO DE FOLIACION**************************
     ttk.Label(ventana_config, text="Selección tipo de foliacion", font=('Helvetica', 12, 'bold'),background="#9DBCCC").pack(anchor=tk.W,padx=(77),pady=(114,0))
     opcion_var = tk.StringVar(value="Impar")
@@ -646,14 +643,6 @@ def crear_documento_foliado():
                             border=0)
     boton_ayuda.pack(side=tk.RIGHT, padx=5)
     boton_ayuda.place(x=300,y=305)
-    #*****************************
-    #cargar logo de SUNAT
-    imagen_logo = Image.open(abrir_imagen("Logo_Sunat.png"))
-    img = imagen_logo.resize((170, 170))  # Ajusta el tamaño según lo necesario
-    img_logo= ImageTk.PhotoImage(img)
-    logo = tk.Label(ventana_config,image=img_logo,bg=color_secundario)
-    logo.pack(pady=(0,30))
-    logo.place(x=580,y=245)
     #*****************************
     
 #CAMBIAR EL BOTON CREAR
@@ -843,14 +832,7 @@ if __name__ == '__main__':
     # Crear un label para mostrar la imagen de fondo
     label_fondo = tk.Label(root, image=fondo)
     label_fondo.place(x=0, y=0, relwidth=1, relheight=1)
-    #LOGO
-    imagen_l = Image.open(abrir_imagen("logoSunat.png"))
-    imagen_lr = imagen_l.resize((120, 35))  # Ajusta el tamaño según lo necesario
-    imagen_logo = ImageTk.PhotoImage(imagen_lr)
-    logo = tk.Label(root,image=imagen_logo,bg="#D0DDE3")
-    logo.pack(pady=(0,30))
-    logo.place(x=170,y=180)
-
+    
     #TITULOS
     title_label = tk.Label(root, 
                             text="HERRAMIENTA PARA \nFOLIAR DOCUMENTOS",
@@ -861,7 +843,7 @@ if __name__ == '__main__':
     title_label.place(x=40,y=260)
     #OGCA    
     title_label = tk.Label(root, 
-                        text="O f i c i n a   d e   G e s t i ó n   y   C o o r d i n a c i ó n   A d u a n e r a",
+                        text="F O L I A R  D O C U M E N T O S,  R Á P I D O  Y  E F I C I E N T E",
                             font=('Hero', 10,'italic'),
                             foreground="black", bg= color_primario                        
                             )
