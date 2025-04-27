@@ -1,0 +1,97 @@
+[33mcommit d141aaec3cdea8a2bd01978b8dd1200e7e688e5b[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Merge: 445cbb9 19721a7
+Author: EduArsene <eduardoanthonny283@gmail.com>
+Date:   Sun Apr 27 16:59:35 2025 -0500
+
+    Primer commit
+
+[33mcommit 445cbb9d966c59152b848c6a764bae15b824230f[m
+Author: EduArsene <eduardoanthonny283@gmail.com>
+Date:   Sun Apr 27 16:56:14 2025 -0500
+
+    Primer commit para segurar la conexion
+
+A	Foliar_documentos-main/Foliar copy.py
+A	Foliar_documentos-main/Foliar.py
+A	Foliar_documentos-main/Fuentes.py
+A	Foliar_documentos-main/LICENSE
+A	Foliar_documentos-main/Pruebas.ipynb
+A	Foliar_documentos-main/README.md
+A	Foliar_documentos-main/comandos para crear exe .py
+A	Foliar_documentos-main/numeracion_impar_vertical.pdf
+A	Foliar_documentos-main/numeracion_normal_vertical.pdf
+A	Foliar_documentos-main/src/Logo.png
+A	Foliar_documentos-main/src/Logo_Sunat.png
+A	Foliar_documentos-main/src/Muestra.png
+A	Foliar_documentos-main/src/Sunat.jpg
+A	Foliar_documentos-main/src/btnAyuda.png
+A	Foliar_documentos-main/src/btnCancelar.png
+A	Foliar_documentos-main/src/btnConvertir.png
+A	Foliar_documentos-main/src/btnCrear.png
+A	Foliar_documentos-main/src/btnCrearDoc.png
+A	Foliar_documentos-main/src/btnExaminar.png
+A	Foliar_documentos-main/src/btnSalir.png
+A	Foliar_documentos-main/src/btnSeleccionarR.png
+A	Foliar_documentos-main/src/fondo2.jpg
+A	Foliar_documentos-main/src/fondo_secciones.png
+A	Foliar_documentos-main/src/logoSunat.png
+A	Foliar_documentos-main/src/titulo_secundario.png
+
+[33mcommit 19721a7a7a07ceddd7a18137ebdf390d46644636[m
+Author: Eduardo Mariños Vergaray <87053911+EduArsene@users.noreply.github.com>
+Date:   Wed Dec 18 12:31:08 2024 -0500
+
+    Update Foliar.py
+
+M	Foliar.py
+
+[33mcommit f3233fca65576b86b1061e3a73e76ce0ddffec40[m
+Author: Eduardo Mariños Vergaray <87053911+EduArsene@users.noreply.github.com>
+Date:   Tue Dec 17 10:00:54 2024 -0500
+
+    Update Foliar copy.py
+    
+    Cambiando de color a las letras y fondo a la hora de activar los Radiobutton
+
+M	Foliar copy.py
+
+[33mcommit e346339e2f634ad18ff9f821da2685a5878d37ed[m
+Author: Eduardo Mariños Vergaray <87053911+EduArsene@users.noreply.github.com>
+Date:   Tue Dec 17 09:51:41 2024 -0500
+
+    Add files via upload
+    
+    Cargando los archivos, documentos y codigo necesarios
+
+A	Foliar copy.py
+A	Foliar.py
+A	Fuentes.py
+A	Pruebas.ipynb
+A	comandos para crear exe .py
+A	numeracion_impar_vertical.pdf
+A	numeracion_normal_vertical.pdf
+A	src/Logo.png
+A	src/Logo_Sunat.png
+A	src/Muestra.png
+A	src/Sunat.jpg
+A	src/btnAyuda.png
+A	src/btnCancelar.png
+A	src/btnConvertir.png
+A	src/btnCrear.png
+A	src/btnCrearDoc.png
+A	src/btnExaminar.png
+A	src/btnSalir.png
+A	src/btnSeleccionarR.png
+A	src/fondo2.jpg
+A	src/fondo_secciones.png
+A	src/logoSunat.png
+A	src/titulo_secundario.png
+
+[33mcommit 652f8d8297c51d2964c7c546345e541b7fa700a1[m
+Author: Eduardo Mariños Vergaray <87053911+EduArsene@users.noreply.github.com>
+Date:   Tue Dec 17 09:47:38 2024 -0500
+
+    Initial commit
+
+A	LICENSE
+A	README.md
