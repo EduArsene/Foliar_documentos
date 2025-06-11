@@ -57,36 +57,36 @@ def configurar_idioma_parrafo(parrafo, lang_code):
 def impar(parrafo):
     correr = parrafo.add_run()
     # Inicio primer bloque
-    agregar_elemento(correr, 'w:fldChar', 'begin')         # {
-    agregar_elemento(correr, 'w:instrText', 'begin', '=')  # =
-    agregar_elemento(correr, 'w:fldChar', 'begin')         # {
-    agregar_elemento(correr, 'w:instrText', 'begin', '=')  # =
+    #agregar_elemento(correr, 'w:fldChar', 'begin')         # {
+    #agregar_elemento(correr, 'w:instrText', 'begin', '=')  # =
+    #agregar_elemento(correr, 'w:fldChar', 'begin')         # {
+    #agregar_elemento(correr, 'w:instrText', 'begin', '=')  # =
     agregar_elemento(correr, 'w:fldChar', 'begin')         # {
     agregar_elemento(correr, 'w:instrText', 'begin', 'PAGE') # PAGE
     agregar_elemento(correr, 'w:fldChar', 'end')           # }
-    agregar_elemento(correr, 'w:instrText', 'begin', '+ 1')  # + 1
-    agregar_elemento(correr, 'w:fldChar', 'separate')      # separador
-    agregar_elemento(correr, 'w:fldChar', 'end')           # }
-    agregar_elemento(correr, 'w:instrText', 'begin', '/2') # /2
-    agregar_elemento(correr, 'w:fldChar', 'end')           # }
+#agregar_elemento(correr, 'w:instrText', 'begin', '+ 1')  # + 1
+#agregar_elemento(correr, 'w:fldChar', 'separate')      # separador
+#agregar_elemento(correr, 'w:fldChar', 'end')           # }
+#agregar_elemento(correr, 'w:instrText', 'begin', '/2') # /2
+#agregar_elemento(correr, 'w:fldChar', 'end')           # }
     #fin primer bloque
     agregar_elemento(correr, 'w:instrText', 'begin', ': ')  # :
     #Inicio segundo bloque
-    agregar_elemento(correr, 'w:fldChar', 'begin')         # {
-    agregar_elemento(correr, 'w:instrText', 'begin', '=')  # =
-    agregar_elemento(correr, 'w:fldChar', 'begin')         # {
-    agregar_elemento(correr, 'w:instrText', 'begin', '=')  # =
-    agregar_elemento(correr, 'w:fldChar', 'begin')         # {
-    agregar_elemento(correr, 'w:instrText', 'begin', '=')  # =
-    agregar_elemento(correr, 'w:fldChar', 'begin')         # {
-    agregar_elemento(correr, 'w:instrText', 'begin', 'PAGE') # PAGE
-    agregar_elemento(correr, 'w:fldChar', 'end')           # }
-    agregar_elemento(correr, 'w:instrText', 'begin', '+ 1')  # + 1
-    agregar_elemento(correr, 'w:fldChar', 'end')           # }
-    agregar_elemento(correr, 'w:instrText', 'begin', '/2') # /2
-    agregar_elemento(correr, 'w:fldChar', 'end')           # }
-    agregar_elemento(correr, 'w:instrText', 'begin', '\*CardText \*Upper') # \*CardText \*Upper
-    agregar_elemento(correr, 'w:fldChar', 'end')           # }
+   #agregar_elemento(correr, 'w:fldChar', 'begin')         # {
+   #agregar_elemento(correr, 'w:instrText', 'begin', '=')  # =
+   #agregar_elemento(correr, 'w:fldChar', 'begin')         # {
+   #agregar_elemento(correr, 'w:instrText', 'begin', '=')  # =
+   #agregar_elemento(correr, 'w:fldChar', 'begin')         # {
+   #agregar_elemento(correr, 'w:instrText', 'begin', '=')  # =
+   #agregar_elemento(correr, 'w:fldChar', 'begin')         # {
+   #agregar_elemento(correr, 'w:instrText', 'begin', 'PAGE') # PAGE
+   #agregar_elemento(correr, 'w:fldChar', 'end')           # }
+   #agregar_elemento(correr, 'w:instrText', 'begin', '+ 1')  # + 1
+   #agregar_elemento(correr, 'w:fldChar', 'end')           # }
+   #agregar_elemento(correr, 'w:instrText', 'begin', '/2') # /2
+   #agregar_elemento(correr, 'w:fldChar', 'end')           # }
+   #agregar_elemento(correr, 'w:instrText', 'begin', "\*CardText \*Upper") # \*CardText \*Upper
+   #agregar_elemento(correr, 'w:fldChar', 'end')           # }
     #Fin segundo bloque      
 #para poder ponerlo en el Encabezado
 def foliarImpar(doc):
