@@ -516,7 +516,7 @@ if __name__ == '__main__':
         bg=color_primario,
         activebackground=color_primario,
         border=0,
-        command=crear_interfaz,
+        command=lambda: crear_interfaz(root),
         image=imagen_cf)
     btn_convertir_docx.place(x=510, y=300)  # Ajusta la posición según sea necesario
     #BOTON SALIR

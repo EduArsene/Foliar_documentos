@@ -4,10 +4,10 @@ from tkinter import filedialog, messagebox, ttk
 import tkinter as tk
 
 color_secundario = "#73A5BC"
-def crear_interfaz():
+def crear_interfaz(root):
     from docx2pdf import convert
     #cerrar la ventana principal
-    root.iconify()
+    #root.iconify()
     #funcion para seleccionar el documento
     def seleccionar_archivo():
         archivo = filedialog.askopenfilename(filetypes=[("Word Document", "*.docx"), ("Word Document", "*.DOCX")])
@@ -42,8 +42,7 @@ def crear_interfaz():
     def minimizar():
         root.deiconify()
         ventana_convertir.destroy()
-    # Crear la ventana principal
-    root = tk.Tk()
+    
     ventana_convertir = tk.Toplevel(root)
     ventana_convertir.title("Conversor")
     ventana_convertir.geometry("500x250")
